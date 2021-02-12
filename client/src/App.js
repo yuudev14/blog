@@ -1,15 +1,24 @@
-import React,{useEffect} from 'react';
-import axios from 'axios';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import './styles/home.scss';
 import Home from './components/home';
+import Log_in from './components/log_in';
+
 
 const App = () => {
-
   return (
     <div className="App">
       <Router>
-        <Route exact path='/' component={Home}/>
+        <Switch>
+          <Route exact path='/' component={Home} />
+          
+          <Route path='/log-in' component={Log_in}/>
+          <Route path='/:id' component={Home} />
+
+        </Switch>
+        
+        
       </Router>
+      
 
     </div>
   );

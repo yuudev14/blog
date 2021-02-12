@@ -1,0 +1,150 @@
+
+.Home{
+
+    display: flex;
+    height: 100%;
+    width: 100%;
+    i{
+        position: fixed;
+        right: 10px;
+        top: 20px;
+        font-size: 2.5em;
+        z-index: 2;
+    }
+    .openHeader{
+        width: 80%;
+        opacity: 1;
+    }
+    header{
+        position: fixed;
+        transition: 0.5s;
+        opacity: 0;
+        z-index: 1;
+        background-color: #101820ff;
+        height: 100%;
+        color: #fff;
+        width: 0;
+        max-width: 425px;
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        nav{
+            height: 10%;
+            padding: 10px;
+            border: 0.1px solid white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            ul{
+                display: flex;
+                list-style-type: none;
+                width: 50%;
+                justify-content: flex-end;
+                li{
+                    margin: 5px;
+                }
+            }
+        }
+    
+        .popular_blogs{
+            padding: 10px;
+            background-color: rgb(41, 60, 80) ;
+            height: 100%;
+            border: 0.1px solid white;
+            overflow: auto;
+            .article{
+                display: flex;
+                .article_preview_img{
+                    height: 90px;
+                    width: 90px;
+                    background-color: cadetblue;
+                    margin-right: 5px;
+                    margin-bottom: 5px;
+                }
+    
+            }
+            
+        }
+        footer{
+            height: 20%;
+            border: 0.1px solid white;
+        }
+        
+    }
+    main{
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        
+        .articles{
+            margin-top: 75px;
+            background-color: white;
+            position: relative;
+            height: 100%;
+            width: 100%;
+            form{
+                position: fixed;
+                top: 2%;
+                left: 20px;
+                background-color: rgba(0, 0, 0, 0.5);
+                padding: 10px;
+                border-radius: 5px;
+                input{
+                    font-size: 1.3em;
+                    
+                    
+                }
+            }
+            .article_lists{
+                display: flex;
+                flex-wrap: wrap;
+                width: 100%;
+                background-color: white;
+                div{
+                    border: 0.1px solid white;
+                    min-height: 200px;
+                    min-width: 200px;
+                    flex-grow: 1;
+                }
+            }
+        }
+        
+    }
+}
+
+@media only screen and (min-width : 640px){
+    .Home{
+        i{
+            display: none;
+        }
+        
+        header{
+            width: 30% !important;
+            opacity: 1;
+            
+            min-width: 200px;
+            
+
+        }
+        main{
+            margin-left: 30%;
+            padding: 0;
+            form{
+                left: 50% !important;
+            }
+            .articles{
+                margin-top: 0;
+                .article_lists{
+                    div{
+                        min-height: 250px;
+                        min-width: 250px;
+
+                    }
+                }
+            }
+
+        }
+        
+    }
+
+}
