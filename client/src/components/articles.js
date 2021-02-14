@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 
 const Article= () => {
     const colors = ['#fee715ff', '#03dac6', '#fff', '#6dac4fff', '#ff5851' ];
@@ -11,18 +12,8 @@ const Article= () => {
                 <input type='text'/>
             </form>
             <div className='article_lists'>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
-                <div style={{backgroundColor : `${random_number()}`}}></div>
+                <Link to='/asdasd'><div style={{backgroundColor : `${random_number()}`}}></div></Link>
+               
 
             </div>
             <button>load more</button>

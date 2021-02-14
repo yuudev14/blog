@@ -10,17 +10,17 @@ const register = async(req, res) => {
                 [email, first_name, last_name, password]);
                 res.send(newAccount.rows); 
             }else{
-                res.send('password and retry password not the same');
+                res.status(403).send('password and retry password not the same');
             }
         }else{
-            res.send('password too short');
+            res.status(403).send('password too short');
         } 
     } catch (e) {
         console.log(e);
-        if(e.constraint === 'account_email_key"'){
-            res.send('email already exist');
+        if(e.constraint === 'account_email_key'){
+            res.status(403).send('email already exist');
         }else{
-            res.send('complete the form');
+            res.status(403).res.send('complete the form');
         }
     }
 }

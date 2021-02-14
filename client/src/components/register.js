@@ -1,7 +1,40 @@
+import React, {useRef} from 'react';
 import '../styles/login_register.scss';
 import {Link} from 'react-router-dom';
+import axios from 'axios';
+
 
 const Register = () => {
+    const first_name = useRef();
+    const last_name = useRef();
+    const email = useRef();
+    const password = useRef();
+    const retry_password = useRef();
+
+    const register = async(e) => {
+        e.preventDefault();
+        const data = {
+            first_name : first_name.current.value,
+            last_name : last_name.current.value,
+            email : email.current.value,
+            password : password.current.value,
+            retry_password : retry_password.current.value
+        }
+        try {
+            const token = await axios.post('/authentication/register', data);
+            console.log(token.data);
+            if(token.status !== 403){
+                [first_name, last_name, email, password, retry_password].forEach(ref => ref.current.value = '');
+            };
+            
+            
+        } catch (error) {
+            console.log(error);
+            
+        }
+        
+        
+    }
     return ( 
         <div>
             <div className='registerForm'>
@@ -9,18 +42,21 @@ const Register = () => {
                     <Link to='/'><h1>Blog</h1></Link>
                     <h3>Register</h3>
                 </header>
-                <form>
+                <form onSubmit={register}>
                     <label className='firstName'>
-                        <input type='text' placeholder='First Name'/>
+                        <input type='text' ref={first_name} placeholder='First Name'/>
                     </label>
                     <label className='lastName'>
-                        <input type='text' placeholder='Last Name'/>
+                        <input type='text' ref={last_name} placeholder='Last Name'/>
                     </label>
                     <label className='email'>
-                        <input type='text' placeholder='email'/>
+                        <input type='text' ref={email} placeholder='email'/>
                     </label>
                     <label className='password'>
-                        <input type='password' placeholder='password' />
+                        <input type='password' ref={password} placeholder='password' />
+                    </label>
+                    <label className='retry_password'>
+                        <input type='password' ref={retry_password} placeholder='retry_password' />
                     </label>
                     <input type='submit' className='submit'/>
                 </form>
