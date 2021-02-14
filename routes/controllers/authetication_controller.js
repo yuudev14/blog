@@ -1,4 +1,5 @@
 const db = require('../../db');
+const generateToken = require('../../utils/generateToken');
 
 const register = async(req, res) => {
     console.log(req.body)
@@ -8,7 +9,8 @@ const register = async(req, res) => {
             if(password === retry_password){
                 const newAccount = await db.query("INSERT INTO account (email, first_name, last_name, password) VALUES ($1, $2, $3, $4) RETURNING * ",
                 [email, first_name, last_name, password]);
-                res.send(newAccount.rows); 
+                const token = generateToken(newAccount.rows[0].user_id);
+                res.send({token}); 
             }else{
                 res.status(403).send('password and retry password not the same');
             }
@@ -25,6 +27,21 @@ const register = async(req, res) => {
     }
 }
 
+const login = async(req, res) => {
+    try {
+        const {email, password} = req.body;
+        const account = await db.query("SELECT user_id FROM account WHERE email = $1 AND password = $2",
+        [email, password]);
+        const token = generateToken(account.rows[0].user_id);
+        res.send({token});
+        
+    } catch (err) {
+        console.log(err);
+        
+    }
+}
+
 module.exports = {
-    register
+    register,
+    login
 }
