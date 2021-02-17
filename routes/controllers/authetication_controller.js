@@ -9,8 +9,9 @@ const register = async(req, res) => {
             if(password === retry_password){
                 const newAccount = await db.query("INSERT INTO account (email, first_name, last_name, password) VALUES ($1, $2, $3, $4) RETURNING * ",
                 [email, first_name, last_name, password]);
-                const token = generateToken(newAccount.rows[0].user_id);
-                res.send({token}); 
+                const blogtoken = generateToken(newAccount.rows[0].user_id);
+                await db.query("INSERT INTO activeTokens (token) VALUES ($1)", [blogtoken]);
+                res.send({blogtoken}); 
             }else{
                 res.status(403).send('password and retry password not the same');
             }
@@ -30,18 +31,42 @@ const register = async(req, res) => {
 const login = async(req, res) => {
     try {
         const {email, password} = req.body;
-        const account = await db.query("SELECT user_id FROM account WHERE email = $1 AND password = $2",
-        [email, password]);
-        const token = generateToken(account.rows[0].user_id);
-        res.send({token});
+        if([email, password].some(info => !info)){
+            res.status(403).send('fill in missing credentials');
+        }else{
+            const account = await db.query("SELECT user_id, password FROM account WHERE email = $1",
+            [email]);
+            if(account.rows.length === 1){
+                if(account.rows[0].password === password){
+                    const blogtoken = generateToken(account.rows[0].user_id);
+                    await db.query("INSERT INTO activeTokens (token) VALUES ($1)", [blogtoken]);
+                    res.send({blogtoken});
+                }else{
+                    res.status(403).send('wrong password');
+                }  
+            }else{
+                res.status(403).send('email not registered');
+            }  
+
+        }
         
     } catch (err) {
         console.log(err);
-        
     }
 }
 
+const logout = async(req, res) => {
+    console.log(req.headers.token)
+    try {
+        await db.query("DELETE from activeTokens WHERE token = $1", [req.headers.token]);
+        res.send(true);
+        
+    } catch (err) {
+        res.send(false)
+    }
+}
 module.exports = {
     register,
-    login
+    login,
+    logout
 }

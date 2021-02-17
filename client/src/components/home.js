@@ -1,9 +1,13 @@
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {HashRouter as Router, Route, Link, Switch} from 'react-router-dom';
 import Article from './articles';
-import React,{useEffect, useRef} from 'react';
+import React,{useEffect, useRef, useState} from 'react';
 import Blog from './blog';
+import axios from 'axios';
+import Nav from './nav';
 
-const Home = () => {
+const Home = (props) => {
+    const {isAuthenticate, setAuthenticate} = props;
+    
     const header = useRef();
     const openNav = () => {
       header.current.classList.toggle('openHeader');
@@ -12,13 +16,24 @@ const Home = () => {
         <div className='Home'>
         <i class="fa fa-bars" onClick={openNav}></i>
         <header ref={header}>
-          <nav>
+          <Nav isAuthenticate={isAuthenticate} setAuthenticate={setAuthenticate}/>
+          {/* <nav>
             <Link to='/'><h1>Blog</h1></Link>
               <ul>
-                <Link to='/log-in'><li>Log-in</li></Link>
-                <Link to='/register'><li>Register</li></Link>
+                {isAuthenticate ? (
+                  <>
+                    <Link to='/createBlog'><li>Create Blog</li></Link>
+                    <li onClick={logout}>Log-out</li>
+                  </>
+                ) : (
+                  <>
+                    <Link to='/log-in'><li>Log-in</li></Link>
+                    <Link to='/register'><li>Register</li></Link>
+                  </>
+                )}
+                
               </ul>
-          </nav>
+          </nav> */}
           <div className='popular_blogs'>
             <h2>Popular Blogs</h2>
             <div className='article'>
@@ -46,8 +61,12 @@ const Home = () => {
         </header>
         <main>
           <Router>
-            <Route exact path='/' component={Article}/>
-            <Route path='/:id' component={Blog} />
+            <Switch>
+              <Route exact path='/' component={Article}/>
+              <Route path='/:id' component={Blog} />
+            </Switch>
+            
+            
           </Router>
         </main>
       </div>

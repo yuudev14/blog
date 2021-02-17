@@ -1,0 +1,61 @@
+@import 'variables';
+
+.createBlog-container{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    .createBlog-forms{
+        background-color: $primaryColor;
+        position: fixed;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 30%;
+        form{
+            width: 80%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+        }
+    }
+    .createBlog-preview{
+        width: 70%;
+        height: 100%;
+        margin-right: 30%;
+        
+        nav{
+            position: fixed;
+            top: 0px;
+            display: flex;
+            width: 70%;
+            padding: 20px 40px;
+            justify-content: space-between;
+            border-bottom: 1px solid $primaryColor;
+            background-color: white;
+            ul{
+                display: flex;
+                list-style-type: none;
+            }
+            li{
+                margin-right: 10px;
+            }
+            a{
+                color: $primaryColor;
+            }
+        }
+        .preview{
+            background-color: white;
+            width: 90%;
+            height: 90%;
+            margin: auto;
+            margin-top: 70px;
+            p{
+                margin-top: 10px;
+            }
+            
+
+        }
+
+    }
+}

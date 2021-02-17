@@ -18,3 +18,7 @@ CREATE TABLE blogs (
     preview_img VARCHAR(100),
     blog TEXT NOT NULL
 );
+
+CREATE TABLE activeTokens (
+    token VARCHAR(500) NOT NULL PRIMARY KEY
+);

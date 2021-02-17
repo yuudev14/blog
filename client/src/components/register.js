@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import axios from 'axios';
 
 
-const Register = () => {
+const Register = (props) => {
     const first_name = useRef();
     const last_name = useRef();
     const email = useRef();
@@ -23,9 +23,14 @@ const Register = () => {
         try {
             const token = await axios.post('/authentication/register', data);
             console.log(token.data);
-            if(token.status !== 403){
+            if(token.status === 200){
+                localStorage.setItem('blogToken', {token : JSON.stringify(token.data.blogtoken)});
                 [first_name, last_name, email, password, retry_password].forEach(ref => ref.current.value = '');
-            };
+                props.setAuthenticate(true);
+                props.history.push('/');
+            }else{
+                console.log(token.data);
+            }
             
             
         } catch (error) {
