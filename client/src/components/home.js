@@ -4,19 +4,20 @@ import React,{useEffect, useRef, useState} from 'react';
 import Blog from './blog';
 import axios from 'axios';
 import Nav from './nav';
+import Dashboard from './dashboard';
 
 const Home = (props) => {
-    const {isAuthenticate, setAuthenticate} = props;
     
     const header = useRef();
     const openNav = () => {
       header.current.classList.toggle('openHeader');
     }
+    
     return ( 
         <div className='Home'>
-        <i class="fa fa-bars" onClick={openNav}></i>
+        <i class="fa fa-bars menu" onClick={openNav}></i>
         <header ref={header}>
-          <Nav isAuthenticate={isAuthenticate} setAuthenticate={setAuthenticate}/>
+          <Nav/>
           {/* <nav>
             <Link to='/'><h1>Blog</h1></Link>
               <ul>
@@ -63,7 +64,8 @@ const Home = (props) => {
           <Router>
             <Switch>
               <Route exact path='/' component={Article}/>
-              <Route path='/:id' component={Blog} />
+              <Route path='/dashboard' component={Dashboard} />
+              <Route path='/blog/:id' component={Blog} />
             </Switch>
             
             

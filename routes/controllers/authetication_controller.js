@@ -56,7 +56,7 @@ const login = async(req, res) => {
 }
 
 const logout = async(req, res) => {
-    console.log(req.headers.token)
+    console.log(req.headers.token);
     try {
         await db.query("DELETE from activeTokens WHERE token = $1", [req.headers.token]);
         res.send(true);

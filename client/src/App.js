@@ -6,54 +6,27 @@ import Register from './components/register';
 import CreateBlog from './components/create_blog';
 import React,{useEffect, useRef, useState} from 'react';
 import axios from 'axios';
+import IsAuth from './context/isAuth';
 
 
 const App = (props) => {
-    const [isAuthenticate, setIsAuthenticate] = useState(false);
-    console.log(props);
-
-    const isAuth = async(setIsAuthenticate) => {
-      if(JSON.parse(localStorage.getItem('blogToken'))){
-        try{
-          const is_auth = await axios.get('/dashboard/isVerify', {headers : {'token': JSON.parse(localStorage.getItem('blogToken'))}})
-          if(is_auth){
-            setIsAuthenticate(true);
-          }else{
-            setIsAuthenticate(false);
-            props.history.push('/')
-          }
-        }catch(err){
-          console.log(err);
-          setIsAuthenticate(false);
-          props.history.push('/')
-        }
-      }else{
-        setIsAuthenticate(false);
-        props.history.push('/')
-      }
-    }
-
-    useEffect(async() => {
-      isAuth(setIsAuthenticate)
-    }, []);
-
-    const setAuthenticate = (bool) => {
-      setIsAuthenticate(bool)
-    }
-
-
   return (
     <div className="App">
       <Router>
-        <Switch>
-          <Route exact path='/' render={(props) => <Home {...props} isAuthenticate={isAuthenticate} setAuthenticate={setAuthenticate} />} />
-          
-          <Route path='/log-in' render={(props) => <Log_in {...props} setAuthenticate={setAuthenticate}/> } />
-          <Route path='/register'  render={(props) => <Register {...props} setAuthenticate={setAuthenticate}/>} />
-          <Route path='/createBlog' render={(props) => <CreateBlog {...props} setAuthenticate={setAuthenticate} isAuthenticate={isAuthenticate} setIsAuthenticate={setIsAuthenticate} isAuth={isAuth}/>} />
-          <Route path='/:id' render={(props) => <Home {...props}/>} />
+        <IsAuth>
+          <Switch>
+            <Route exact path='/' render={(props) => <Home {...props} />} />
+            <Route path='/dashboard' component={Home} />
+            
+            <Route path='/log-in' component={Log_in}  />
+            <Route path='/register'  render={(props) => <Register {...props} />} />
+            <Route path='/createBlog' render={(props) => <CreateBlog {...props} />} />
+            <Route path='/updateBlog/:id' render={(props) => <CreateBlog {...props} />} />
+            <Route path='/blog/:id' component={Home} />
 
-        </Switch>
+          </Switch>
+        </IsAuth>
+        
         
         
       </Router>

@@ -15,6 +15,8 @@ app.use('/authentication', require('./routes/authentication'));
 
 app.use('/dashboard', require('./routes/dashboard'));
 
+app.use('/blogs', require('./routes/blogs'));
+
 
 app.listen(port, () => {
     console.log(`listening to port ${port}`);

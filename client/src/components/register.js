@@ -1,7 +1,8 @@
-import React, {useRef} from 'react';
+import React, {useRef, useContext} from 'react';
 import '../styles/login_register.scss';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import { IS_AUTH } from '../context/isAuth';
 
 
 const Register = (props) => {
@@ -10,6 +11,7 @@ const Register = (props) => {
     const email = useRef();
     const password = useRef();
     const retry_password = useRef();
+    const {is_auth, is_auth_dispatch} = useContext(IS_AUTH);
 
     const register = async(e) => {
         e.preventDefault();
@@ -26,13 +28,11 @@ const Register = (props) => {
             if(token.status === 200){
                 localStorage.setItem('blogToken', {token : JSON.stringify(token.data.blogtoken)});
                 [first_name, last_name, email, password, retry_password].forEach(ref => ref.current.value = '');
-                props.setAuthenticate(true);
+                is_auth_dispatch({type : 'IS_AUTH'})
                 props.history.push('/');
             }else{
                 console.log(token.data);
-            }
-            
-            
+            } 
         } catch (error) {
             console.log(error);
             

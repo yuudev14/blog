@@ -12,11 +12,27 @@
         height: 100%;
         width: 30%;
         form{
+            h2{
+                color: white;
+            }
             width: 80%;
             height: 100%;
+            resize: none;
             display: flex;
             flex-direction: column;
             margin: auto;
+            input{
+                width: 100%;
+            }
+            #textarea{
+                height: 50%;
+                textarea{
+                    height: 80%;
+                    width: 100%;
+                    resize: none;
+
+                }
+            }
         }
     }
     .createBlog-preview{
@@ -46,12 +62,22 @@
         }
         .preview{
             background-color: white;
-            width: 90%;
-            height: 90%;
+            width: 80%;
+            height: 80%;
             margin: auto;
             margin-top: 70px;
+            padding: 40px;
+            h1{
+                font-family: $primaryFont;
+                font-size: 4em;
+                margin-bottom: 20px;
+            }
             p{
+                font-size: 1.2em;
                 margin-top: 10px;
+                text-indent: 30px;
+                font-family: $secondaryFont;
+                line-height: 30px;
             }
             
 

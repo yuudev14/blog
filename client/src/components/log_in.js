@@ -1,12 +1,13 @@
-import React, {useRef} from 'react';
-import '../styles/login_register.scss';
+import React, {useRef, useContext, useEffect} from 'react';
+// import '../styles/login_register.scss';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import { IS_AUTH } from '../context/isAuth';
 
 const Log_in = (props) => {
     const email = useRef();
     const password = useRef();
-    const {setAuthenticate} = props;
+    const {is_auth, is_auth_dispatch} = useContext(IS_AUTH);
     const login = async(e) => {
         e.preventDefault();
         const data = {
@@ -16,16 +17,15 @@ const Log_in = (props) => {
         try {
             const token = await axios.post('/authentication/login', data);
             if(token.status === 200){
-                console.log(token.data)
                 localStorage.setItem('blogToken',  JSON.stringify(token.data.blogtoken));
-                setAuthenticate(true);
+                is_auth_dispatch({type : 'IS_AUTH'})
                 props.history.push('/');
             }else{
                 console.log(token.data);
             }
             
         } catch (err) {
-            console.log(err)
+            console.log(err.response.data)
         }
     }
     return ( 
