@@ -20,12 +20,12 @@ CREATE TABLE blogs (
 );
 
 CREATE TABLE reactions (
-    reaction_id uuid NOT NULL PRIMARY KEY,
-    blog_id uuid NOT NULL REFERENCES blogs(blog_id).
+    reaction_id uuid DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+    blog_id uuid NOT NULL REFERENCES blogs(blog_id),
     user_id uuid  NOT NULL REFERENCES account(user_id),
     date DATE NOT NULL DEFAULT now(),
-    reaction VARCHAR(50) NOT NULL,
-)
+    reaction VARCHAR(50) NOT NULL
+);
 
 CREATE TABLE activeTokens (
     token VARCHAR(500) NOT NULL PRIMARY KEY

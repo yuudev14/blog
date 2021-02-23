@@ -43,10 +43,18 @@ const Dashboard = (props) => {
             <div className='articles'>
                 {blogs.map(blog => (
                     <div className='article' style={{backgroundColor : `${random_number()}`}}>
-                    <Link to={`/blog/${blog.blog_id}`}><h1>{blog.title}</h1></Link>
+                        <div className='article_header'>
+                            <Link to={`/blog/${blog.blog_id}`}><h1>{blog.title}</h1></Link>
+                            <div className='article_options'>
+                                <i className='fa fa-trash-o' onClick={() => deleteBlog(blog.blog_id)}></i>
+                                <i className='fas fa-edit' onClick={() => updateBlog(blog)}></i>
+
+                            </div>
+                            
+                        </div>
+                        
                         {/* <p>{blog.blog[0]}</p> */}
-                        <i className='fa fa-trash-o' onClick={() => deleteBlog(blog.blog_id)}></i>
-                        <i onClick={() => updateBlog(blog)}>edit</i>
+                        
                     </div>
 
                 ))}

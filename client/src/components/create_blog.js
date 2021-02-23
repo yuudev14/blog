@@ -42,6 +42,9 @@ const CreateBlog = (props) => {
         if(e.target.name === 'blog'){
             const value = e.target.value.split("\n");
             console.log(value);
+            var topPos = scrollHere.current.offsetTop;
+            window.scroll(0,topPos);
+            console.log(topPos)
             setBlogInfo({
                 ...blogInfo,
                 [e.target.name] : value
@@ -55,9 +58,7 @@ const CreateBlog = (props) => {
         }   
     }
 
-    useEffect(()=>{
-        console.log(blogInfo)
-    },[blogInfo]);
+    const scrollHere = useRef();
 
     const createBlog = async() => {
         try {
@@ -108,6 +109,7 @@ const CreateBlog = (props) => {
                     {blogInfo.blog.map(p => (
                         <p>{p}</p>
                     ))}
+                    <p id='scroll_here' ref={scrollHere}></p>
                     
                 </div>
 
@@ -125,7 +127,7 @@ const CreateBlog = (props) => {
                     </label>
                     <label id='textarea'>
                         <h2>Body</h2>
-                        <textarea  name='blog' onChange={setBlogInfoMethod} value={blogInfo.blog}></textarea>
+                        <textarea  name='blog' onChange={setBlogInfoMethod} value={blogInfo.blog.join("\n")}></textarea>
                     </label>
                     <input type='submit' value='publish'/>
                 </form>
