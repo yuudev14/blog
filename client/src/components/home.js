@@ -12,49 +12,37 @@ const Home = (props) => {
     const openNav = () => {
       header.current.classList.toggle('openHeader');
     }
+    const [popularBlogs, setPopularBlogs] = useState([]);
+
+    useEffect(async() => {
+      try {
+        const blogs = await axios.get('/blogs/popular_blogs');
+        console.log(blogs.data);
+        setPopularBlogs(blogs.data);
+        
+      } catch (err) {
+        console.log(err.response.data);
+        
+      }
+
+    }, [])
     
     return ( 
         <div className='Home'>
         <i class="fa fa-bars menu" onClick={openNav}></i>
         <header ref={header}>
           <Nav/>
-          {/* <nav>
-            <Link to='/'><h1>Blog</h1></Link>
-              <ul>
-                {isAuthenticate ? (
-                  <>
-                    <Link to='/createBlog'><li>Create Blog</li></Link>
-                    <li onClick={logout}>Log-out</li>
-                  </>
-                ) : (
-                  <>
-                    <Link to='/log-in'><li>Log-in</li></Link>
-                    <Link to='/register'><li>Register</li></Link>
-                  </>
-                )}
-                
-              </ul>
-          </nav> */}
           <div className='popular_blogs'>
             <h2>Popular Blogs</h2>
-            <div className='article'>
-              <div className='article_preview_img'></div>
-              <h5>The importance of good hobbies</h5>
-            </div>
-            <div className='article'>
-              <div className='article_preview_img'></div>
-              <h5>The importance of good hobbies</h5>
-            </div>
-            <div className='article'>
-              <div className='article_preview_img'></div>
-              <h5>The importance of good hobbies</h5>
-            </div>
-            <div className='article'>
-              <div className='article_preview_img'></div>
-              <h5>The importance of good hobbies</h5>
-            </div>
+            {popularBlogs.map(blog => (
+              <Link to={`/blog/${blog.blog_id}`}>
+                <div className='article'>
+                  <div className='article_preview_img'></div>
+                  <h5>{blog.title}</h5>
+                </div>
+              </Link>
             
-
+            ))}
           </div>
           <footer>
 

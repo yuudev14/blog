@@ -12,7 +12,6 @@ const Blog = (props) => {
     const [reactedToBlog, setReactedToBlog] = useState(Boolean);
     
     useEffect(async() => {
-        console.log('hi')
         try {
             const blog_id = props.match.params.id;
             const blog_details = await axios.get('/blogs/article/' + blog_id);

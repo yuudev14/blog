@@ -53,6 +53,10 @@
             height: 100%;
             border: 0.1px solid white;
             overflow: auto;
+            a{
+                height: max-content;
+                width: max-content;
+            }
             .article{
                 display: flex;
                 .article_preview_img{
@@ -61,6 +65,9 @@
                     background-color: cadetblue;
                     margin-right: 5px;
                     margin-bottom: 5px;
+                }
+                h5{
+                    width: 70%;
                 }
     
             }

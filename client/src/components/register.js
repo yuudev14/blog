@@ -26,10 +26,11 @@ const Register = (props) => {
             const token = await axios.post('/authentication/register', data);
             console.log(token.data);
             if(token.status === 200){
-                localStorage.setItem('blogToken', {token : JSON.stringify(token.data.blogtoken)});
+                localStorage.setItem('blogToken',  JSON.stringify(token.data.blogtoken));
                 [first_name, last_name, email, password, retry_password].forEach(ref => ref.current.value = '');
                 is_auth_dispatch({type : 'IS_AUTH'})
                 props.history.push('/');
+
             }else{
                 console.log(token.data);
             } 

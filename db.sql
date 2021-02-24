@@ -30,3 +30,7 @@ CREATE TABLE reactions (
 CREATE TABLE activeTokens (
     token VARCHAR(500) NOT NULL PRIMARY KEY
 );
+
+SELECT react.count, blogs.title, blogs.preview_img FROM 
+(SELECT reactions.blog_id, COUNT(*) AS count FROM reactions JOIN blogs ON reactions.blog_id = blogs.blog_id GROUP BY reactions.blog_id) AS react
+JOIN blogs ON react.blog_id = blogs.blog_id ORDER BY react.count DESC;

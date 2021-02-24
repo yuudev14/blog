@@ -25,9 +25,21 @@ const article_details = async(req, res) => {
         res.status(404).send('false');
         console.log(err);
     }
+};
+
+const getPopularBlogs = async(req, res) => {
+    try {
+        const popularBlogs = await db.query("SELECT react.blog_id, blogs.title, blogs.preview_img FROM (SELECT reactions.blog_id, COUNT(*) AS count FROM reactions JOIN blogs ON reactions.blog_id = blogs.blog_id GROUP BY reactions.blog_id) AS react JOIN blogs ON react.blog_id = blogs.blog_id ORDER BY react.count DESC");
+        res.send(popularBlogs.rows);
+        
+    } catch (err) {
+        console.log(err);
+        
+    }
 }
 
 module.exports = {
     articles,
-    article_details
+    article_details,
+    getPopularBlogs
 }
