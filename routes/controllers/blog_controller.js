@@ -29,7 +29,7 @@ const article_details = async(req, res) => {
 
 const getPopularBlogs = async(req, res) => {
     try {
-        const popularBlogs = await db.query("SELECT react.blog_id, blogs.title, blogs.preview_img FROM (SELECT reactions.blog_id, COUNT(*) AS count FROM reactions JOIN blogs ON reactions.blog_id = blogs.blog_id GROUP BY reactions.blog_id) AS react JOIN blogs ON react.blog_id = blogs.blog_id ORDER BY react.count DESC");
+        const popularBlogs = await db.query("SELECT react.blog_id, blogs.title, blogs.preview_img FROM (SELECT reactions.blog_id, COUNT(*) AS count FROM reactions JOIN blogs ON reactions.blog_id = blogs.blog_id GROUP BY reactions.blog_id) AS react JOIN blogs ON react.blog_id = blogs.blog_id ORDER BY react.count DESC LIMIT 4");
         res.send(popularBlogs.rows);
         
     } catch (err) {
@@ -38,8 +38,20 @@ const getPopularBlogs = async(req, res) => {
     }
 }
 
+const search = async(req, res) => {
+    try {
+        const {search} = req.body;
+        const search_blogs = await db.query("SELECT * FROM blogs WHERE title ILIKE $1", [`%${search}%`]);
+        res.send(search_blogs.rows);
+        
+    } catch (err) {
+        console.log(err);
+        
+    }
+}
 module.exports = {
     articles,
     article_details,
-    getPopularBlogs
+    getPopularBlogs,
+    search
 }

@@ -71,6 +71,11 @@
             margin: auto;
             margin-top: 70px;
             padding: 40px;
+            img{
+                width: 100%;
+                margin: auto;
+                // position: absolute;
+            }
             h1{
                 font-family: $primaryFont;
                 font-size: 4em;

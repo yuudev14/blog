@@ -99,6 +99,18 @@ const unlikeBlog = async(req, res) => {
     }
 }
 
+const search = async(req, res) => {
+    try {
+        const {search} = req.body;
+        const search_blogs = await db.query("SELECT * FROM blogs WHERE title ILIKE $1 AND user_id = $2", [`%${search}%`, req.user]);
+        res.send(search_blogs.rows);
+        
+    } catch (err) {
+        console.log(err);
+        
+    }
+}
+
 
 
 module.exports = {
@@ -109,5 +121,6 @@ module.exports = {
     updateBlog,
     check_blog_reaction, 
     likeBlog,
-    unlikeBlog
+    unlikeBlog,
+    search
 }

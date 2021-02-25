@@ -52,7 +52,7 @@ const Home = (props) => {
           <Router>
             <Switch>
               <Route exact path='/' component={Article}/>
-              <Route path='/dashboard' component={Dashboard} />
+              <Route path='/dashboard' render={(props => (<Dashboard {...props} setPopularBlogs={setPopularBlogs}/>))} />
               <Route path='/blog/:id' component={Blog} />
             </Switch>
             

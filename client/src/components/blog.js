@@ -67,6 +67,7 @@ const Blog = (props) => {
                 <p>published by : {blog.first_name} {blog.last_name}</p>
                 <i style={{color : reactedToBlog ? 'yellow' : 'black'}} className='fas fa-star' onClick={like}>{blog.reacts}</i>
             </div>
+            <img src={blog.preview_img} />
             {blog.blog.map(blog => (
                 <p>{blog}</p>
             ))}

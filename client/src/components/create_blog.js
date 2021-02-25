@@ -9,7 +9,9 @@ const CreateBlog = (props) => {
     const [blogInfo, setBlogInfo] = useState({
         title : '',
         blog : [],
-        preview_image : '',
+        sample_img : '',
+        img : ''
+
     });
     
     useEffect(async() => {
@@ -39,6 +41,7 @@ const CreateBlog = (props) => {
 
 
     const setBlogInfoMethod = (e) => {
+        
         if(e.target.name === 'blog'){
             const value = e.target.value.split("\n");
             console.log(value);
@@ -50,6 +53,13 @@ const CreateBlog = (props) => {
                 [e.target.name] : value
             });
 
+        }else if(e.target.name === 'img'){
+            setBlogInfo({
+                ...blogInfo,
+                [e.target.name] : e.target.files[0],
+                sample_img : URL.createObjectURL(e.target.files[0])
+            });
+            
         }else{
             setBlogInfo({
                 ...blogInfo,
@@ -62,7 +72,13 @@ const CreateBlog = (props) => {
 
     const createBlog = async() => {
         try {
-            const publishBlog = await axios.post('/dashboard/create-blog', blogInfo, {headers : {'token': JSON.parse(localStorage.getItem('blogToken'))}});
+            const preset = 'kopfy1vm';
+            const url = 'https://api.cloudinary.com/v1_1/yutakaki/image/upload';
+            const formData = new FormData();
+            formData.append('file', blogInfo.img);
+            formData.append('upload_preset', preset);
+            const uploadImg = await axios.post(url, formData);
+            const publishBlog = await axios.post('/dashboard/create-blog', {...blogInfo, preview_img : uploadImg.data.secure_url}, {headers : {'token': JSON.parse(localStorage.getItem('blogToken'))}});
             console.log(publishBlog.data);
             props.history.push('/')
         } catch (err) {
@@ -106,6 +122,7 @@ const CreateBlog = (props) => {
                 <Nav/>
                 <div className='preview' >
                     <h1>{blogInfo.title}</h1>
+                    <img src={blogInfo.sample_img} />
                     {blogInfo.blog.map(p => (
                         <p>{p}</p>
                     ))}
@@ -119,7 +136,7 @@ const CreateBlog = (props) => {
                 <form onSubmit={publish}>
                     <label>
                         <h2>Blog Image</h2>
-                        <input type='file' />
+                        <input name='img' onChange={setBlogInfoMethod} type='file' accept='image/*' multiple={false}/>
                     </label>
                     <label>
                         <h2>Title</h2>

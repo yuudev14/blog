@@ -13,6 +13,7 @@ route.post('/create-blog', verifyToken, dashboard.publish);
 route.delete('/delete-blog/:id', verifyToken, dashboard.deleteBlog);
 route.post('/update-blog', verifyToken, dashboard.updateBlog);
 route.get('/check-blog-reaction/:id', verifyToken, dashboard.check_blog_reaction);
+route.post('/search_blog', verifyToken, dashboard.search);
 
 
 

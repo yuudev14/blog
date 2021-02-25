@@ -13,6 +13,9 @@ const Dashboard = (props) => {
         try {
             const usersBlogs = await axios.delete('/dashboard/delete-blog/' + id, {headers : {'token': JSON.parse(localStorage.getItem('blogToken'))}});
             setBlogs(usersBlogs.data);
+            const blogs = await axios.get('/blogs/popular_blogs');
+            console.log(blogs.data);
+            props.setPopularBlogs(blogs.data);
         } catch (err) {
             console.log(err);
             
@@ -34,12 +37,34 @@ const Dashboard = (props) => {
             
         }
 
-    },[])
+    },[]);
+
+    const search = async(e) => {
+        if(e.target.value === ''){
+            try {
+                const usersBlogs = await axios.get('/dashboard/user',{headers : {'token': JSON.parse(localStorage.getItem('blogToken'))}})
+                setBlogs(usersBlogs.data)
+                
+            } catch (err) {
+                console.log(err);
+                
+            }
+        }else{
+            try {
+                const search_blog = await axios.post('/dashboard/search_blog', {search : e.target.value}, {headers : {'token': JSON.parse(localStorage.getItem('blogToken'))}})
+                setBlogs(search_blog.data);
+            } catch (err) {
+                console.log(err);
+                
+            }
+
+        }
+    }
     return ( 
         <section className='dashboard'>
-            <form>
-                <input type='text' />
-            </form>
+            {/* <form> */}
+                <input type='text' onChange={search} />
+            {/* </form> */}
             <div className='articles'>
                 {blogs.map(blog => (
                     <div className='article' style={{backgroundColor : `${random_number()}`}}>

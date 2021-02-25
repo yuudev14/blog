@@ -16,16 +16,44 @@ const Article= () => {
         setArticles(allArticles.data);
   
       },[]);
+    
+    const search = async(e) => {
+        if(e.target.value === ''){
+            const allArticles = await axios.get('/blogs/get-articles');
+            setArticles(allArticles.data);
+
+        }else{
+            try {
+                const search_blog = await axios.post('/blogs/search_blog', {search : e.target.value});
+                setArticles(search_blog.data);
+
+
+                
+            } catch (err) {
+                console.log(err);
+                
+            }
+
+        }
+
+    }
     return (
         <section className='articles'>
-            <form>
-                <input type='text'/>
-            </form>
+                <input onChange={search} type='text'/>
                 <div className='article_lists'>
                     {articles.map(article => (
-                        <Link to={`/blog/${article.blog_id}`}><div style={{backgroundColor : `${random_number()}`}}>
-                            <h2>{article.title}</h2>
-                        </div></Link>
+                        <div style={{backgroundColor : `${random_number()}`}}>
+                        
+                            {article.preview_img !== '' && (<img src={article.preview_img} />)}
+                        
+                            <Link to={`/blog/${article.blog_id}`}>
+                                <h2>{article.title}</h2>
+                            </Link>
+                            
+                            
+
+                            
+                        </div>
                     ))}
                     
                 </div>
