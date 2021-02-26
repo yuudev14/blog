@@ -12,7 +12,7 @@
     "start": "node server.js",
     "build": "cd client && npm run build",
     "install-client" : "cd client && npm install",
-    "heroku_postbuild" : "npm run install-client && npm run build",
+    "heroku-postbuild" : "npm run install-client && npm run build",
     "server": "nodemon server.js",
     
     "client": "cd client && npm start",
