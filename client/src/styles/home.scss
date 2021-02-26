@@ -20,7 +20,7 @@
         position: fixed;
         transition: 0.5s;
         opacity: 0;
-        z-index: 1;
+        z-index: 11;
         background-color: #101820ff;
         height: 100%;
         color: #fff;
@@ -102,8 +102,8 @@
                 top: 10px;
                 // z-index: 10;
                 
-                left: 50%;
-                width: 30%;
+                left: 20px;
+                width: 70%;
                 height: 30px;
                 outline: none;
                 border-radius: 2px;
@@ -125,20 +125,45 @@
                     flex-grow: 1;
                     border: 1px solid white;
                     padding: 20px;
+                    position: relative;
+                    img{
+                        height: 100%;
+                        width: 100%;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        z-index: 0;
+                    }
+                    a{
+                        background-color: rgba(0, 0, 0, 0.5);
+                        padding: 10px;
+                        width: 100%;
+                        z-index: 1 !important;
+                      
+                    }
                     .article_header{
                         display: flex;
                         justify-content: space-between;
+                        // background-color: rgba(0, 0, 0, 0.5);
+                        z-index: 2 !important;
+                        
+                       
                     }
                     .article_options{
                         display: flex;
                         flex-direction: column;
+                        z-index: 1 !important;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        padding: 10px;
                     }
                     i{
                         color: white;
                         font-size: 1.5em;
+                        margin-bottom: 10px;
                     }
                     p {
                         overflow: hidden;
+
                     }
                 }
 
@@ -186,7 +211,7 @@
             input{
                 position: fixed;
                 top: 2%;
-                left: 50%;
+                left: 20px;
                 padding: 10px;
                 border-radius: 5px;
                 z-index: 10;
@@ -267,6 +292,9 @@
             }
             .articles{
                 margin-top: 0;
+                input{
+                    left: 50%;
+                }
                 .article_lists{
                     width: 100%;
                     div{
@@ -275,6 +303,13 @@
 
                     }
                 }
+            }
+            .dashboard{
+                input{
+                    left: 50%;
+                    width: 30%;
+                }
+
             }
 
         }

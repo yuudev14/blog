@@ -4,13 +4,17 @@
     height: 100%;
     width: 100%;
     position: relative;
+    .view{
+        width: 90% !important;
+    }
     .createBlog-forms{
         background-color: $primaryColor;
         position: fixed;
         right: 0;
-        top: 0;
+        top: 75px;
         height: 100%;
-        width: 30%;
+        transition: 0.5s;
+        width: 0%;
         border: 1px solid white;
         form{
             h2{
@@ -40,12 +44,20 @@
         width: 70%;
         height: 100%;
         margin-right: 30%;
+        i{
+            position: fixed;
+            top: 80%;
+            left: 20px;
+            font-size: 2em;
+            color: $primaryColor;
+            z-index: 11;
+        }
         
         nav{
             position: fixed;
             top: 0px;
             display: flex;
-            width: 70%;
+            width: 100%;
             padding: 20px 40px;
             justify-content: space-between;
             border: 1px solid white;
@@ -92,5 +104,24 @@
 
         }
 
+    }
+}
+
+@media only screen and (min-width : 800px){
+    .createBlog-container{
+        position: relative;
+        .createBlog-forms{
+            width: 30%;
+            top: 0;
+        }
+        .createBlog-preview{
+            width: 70%;
+            i{
+                display: none;
+            }
+        }
+        nav{
+            width: 70% !important;
+        }
     }
 }

@@ -13,11 +13,12 @@ const CreateBlog = (props) => {
         img : ''
 
     });
-    
+    const form = useRef();
     useEffect(async() => {
         try {
             const isVerify = await axios.get('/dashboard/isVerify', {headers : {'token': JSON.parse(localStorage.getItem('blogToken'))}});
             if(!isVerify){
+                is_auth_dispatch({type : "NOT_AUTH"});
                 props.history.push('/')
             }else{
                 if(props.location.pathname !== '/createBlog'){
@@ -116,9 +117,13 @@ const CreateBlog = (props) => {
         
         
     }
+    const viewForm = () => {
+        form.current.classList.toggle('view');
+    }
     return ( 
         <div className='createBlog-container'>
             <div className='createBlog-preview'>
+                <i className='fas fa-edit' onClick={viewForm}></i>
                 <Nav/>
                 <div className='preview' >
                     <h1>{blogInfo.title}</h1>
@@ -132,7 +137,7 @@ const CreateBlog = (props) => {
 
             </div>
             
-            <div className='createBlog-forms'>
+            <div className='createBlog-forms' ref={form}>
                 <form onSubmit={publish}>
                     <label>
                         <h2>Blog Image</h2>

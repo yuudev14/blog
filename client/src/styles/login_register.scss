@@ -2,9 +2,14 @@
 .loginForm, .registerForm{
     position: absolute;
     width: 300px;
-    top: 30%;
+    top: 100px;
     left: 50%;
-    transform: translate(-50%, 30%);
+    transform: translateX(-50%);
+    header, footer, div, label, input[type=submit]{
+        &:hover{
+            transform: scale(1.1);
+        }
+    }
     header{
         display: flex;
         justify-content: space-between;
@@ -74,6 +79,16 @@
         a{
             text-decoration: none;
             color: #fee715ff;
+        }
+    }
+    .error{
+        background-color: red;
+        padding: 20px;
+        border: 1px solid white;
+        color: white;
+        display: flex;
+        p{
+            margin-left: 20px;
         }
     }
 

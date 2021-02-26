@@ -12,7 +12,6 @@ const Article= () => {
     
     useEffect(async()=>{
         const allArticles = await axios.get('/blogs/get-articles');
-        console.log(allArticles.data);
         setArticles(allArticles.data);
   
       },[]);

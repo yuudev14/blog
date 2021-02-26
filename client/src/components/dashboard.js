@@ -1,9 +1,11 @@
 import axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Link} from 'react-router-dom';
+import { IS_AUTH } from '../context/isAuth';
 
 const Dashboard = (props) => {
     const colors = ['#fee715ff', '#03dac6', '#6dac4fff', '#ff5851' ];
+    const {is_auth_dispatch} =  useContext(IS_AUTH);
     const random_number = () => {
         const length = colors.length;
         return colors[Math.floor(Math.random() * length)]
@@ -33,8 +35,9 @@ const Dashboard = (props) => {
             setBlogs(usersBlogs.data)
             
         } catch (err) {
-            console.log(err);
-            
+            alert(err.response.data);
+            is_auth_dispatch({type:'NOT_AUTH'});
+            props.history.push('/');
         }
 
     },[]);
@@ -68,10 +71,14 @@ const Dashboard = (props) => {
             <div className='articles'>
                 {blogs.map(blog => (
                     <div className='article' style={{backgroundColor : `${random_number()}`}}>
+                        {blog.preview_img !== '' && (
+                                    <img src={blog.preview_img} />
+                            )}
                         <div className='article_header'>
+                            
                             <Link to={`/blog/${blog.blog_id}`}><h1>{blog.title}</h1></Link>
                             <div className='article_options'>
-                                <i className='fa fa-trash-o' onClick={() => deleteBlog(blog.blog_id)}></i>
+                                <i className='fa fa-trash' onClick={() => deleteBlog(blog.blog_id)}></i>
                                 <i className='fas fa-edit' onClick={() => updateBlog(blog)}></i>
 
                             </div>

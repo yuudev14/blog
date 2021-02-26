@@ -1,4 +1,4 @@
-import React, {useRef, useContext, useEffect} from 'react';
+import React, {useRef, useContext, useEffect, useState} from 'react';
 // import '../styles/login_register.scss';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
@@ -8,6 +8,7 @@ const Log_in = (props) => {
     const email = useRef();
     const password = useRef();
     const {is_auth, is_auth_dispatch} = useContext(IS_AUTH);
+    const [error, setError] = useState('');
     const login = async(e) => {
         e.preventDefault();
         const data = {
@@ -25,7 +26,7 @@ const Log_in = (props) => {
             }
             
         } catch (err) {
-            console.log(err.response.data)
+            setError(err.response.data)
         }
     }
     return ( 
@@ -48,6 +49,13 @@ const Log_in = (props) => {
                     <p>Don't have an account yet? <Link to='/register'>register</Link></p>
 
                 </footer>
+                {error !== '' && (
+                    <div className='error'>
+                        <i className='fa fa-exclamation-circle'></i>
+                        <p>{error}</p>
+                    </div>
+                )}
+                
             </div>
             
         </div>
